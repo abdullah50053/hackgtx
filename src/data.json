@@ -1,0 +1,4 @@
+{
+    "stocks": ["AAPL", "SBUX", "MSFT", "CSCO", "QCOM", "META", "AMZN", "TSLA", "AMD", "NFLX"],
+    "stockOpenPrices": [178.85, 91.48, 327.73, 53.77, 108.66, 314.69, 129.79, 254.46, 105.09, 355.68]
+}

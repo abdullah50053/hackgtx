@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import data from '../../data.json';
 
 type ResponseData = {
     prices: number[];
@@ -10,8 +11,8 @@ const prices: number[] = [];
 const MIN_DELTA = 0.01;
 const MAX_DELTA = 0.1;
 
-const stocks = ['AAPL'];
-const stockOpenPrices = [178.85];
+const stocks = data.stocks;
+const stockOpenPrices = data.stockOpenPrices;
 
 // GET /
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
@@ -40,7 +41,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
     }
 
     // Calculate the price for each minute
-    let prev = prices[prices.length - 1]
+    let prev = prices[prices.length - 1];
     for (let i = 0; i < toGen; i++) {
         const d = randVal(MIN_DELTA, MAX_DELTA);
 
