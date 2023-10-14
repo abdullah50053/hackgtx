@@ -25,3 +25,15 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4E4F4E;
+  border-radius: 10px;
+}
