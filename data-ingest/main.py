@@ -22,7 +22,7 @@ def pull_data(stock: str, interval: str, period: str) -> list[float]:
 def main():
     stocks = read_stock_list()
 
-    # Get the minute data for the last 5 days
+    # Get the 5 minute data for the last 5 days
     week_data = []
     for stock in stocks:
         data = pull_data(stock, "1m", "5d")
@@ -32,6 +32,10 @@ def main():
             + "... remaining: "
             + str(len(stocks) - stocks.index(stock))
         )
+
+        # Remove every 4 elements (keep index 0, 5, 10, etc.)
+        data = [data[i] for i in range(len(data)) if i % 4 == 0]
+
         week_data.append(data)
         
         

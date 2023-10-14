@@ -14,7 +14,7 @@ const MAX_DELTA = 0.1;
 const stocks = data.stocks;
 const stockOpenPrices = data.stockOpenPrices;
 
-// GET /
+// GET /today?stock={stock}
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     // Get the stock from the query string
     const stock = req.query.stock as string;

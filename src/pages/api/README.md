@@ -11,7 +11,7 @@
 
 - stocks: list of stocks
 - stockOpenPrices: last price the market closed on (Friday)
-- week: stock prices for last week (minute data)
+- week: stock prices for last week (5 minute data)
 - month: stock prices for last month (hour data)
 - year: stock prices for last year (day data)
 
@@ -19,6 +19,20 @@
 # API Endpoints
 
 -   GET /today?stock={stock_name}
+-   GET /week?stock={stock_name}
+-   GET /month?stock={stock_name}
+-   GET /year?stock={stock_name}
+
+## Return
+
+```json
+{
+    "prices": [0, 1, 2],
+    "error": "error string",
+}
+```
+
+Prices is a list of numbers, starting from opening to close, with the specified interval
 
 ## Valid stock names
 
