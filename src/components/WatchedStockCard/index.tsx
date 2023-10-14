@@ -18,7 +18,7 @@ export default function WatchedStockCard({ stock }: WatchedStockCardProps) {
         prices.push(Math.random() * 10)
     }
     return (
-        <div className="transition flex flex-col w-56 h-full px-4 py-2 hover:bg-slate-400 bg-gray-500">
+        <div className="transition flex flex-col w-56 h-full px-4 py-2 hover:bg-slate-400 cursor-pointer bg-gray-500">
             <div className="flex flex-row">
                 {/* Icon + Name */}
                 <div className="flex flex-row items-center">
