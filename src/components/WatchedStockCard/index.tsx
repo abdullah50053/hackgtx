@@ -1,7 +1,12 @@
+import dynamic from "next/dynamic"
 import { Stock } from "@/lib/types"
 import MissingSVG from "../svg/MissingSVG"
-import Chart from "../Chart"
 import ArrowLongSVG from "../svg/ArrowLongSVG"
+
+const Chart = dynamic(
+    import("../Chart"),
+    { ssr: false }
+)
 
 interface WatchedStockCardProps {
     stock: Stock
@@ -26,7 +31,7 @@ export default function WatchedStockCard({ stock }: WatchedStockCardProps) {
             {/* Stock Price */}
             <div className="flex flex-row items-center">
                 <div className="font-bold">Share Price</div>
-                <div className="flex-grow justify-end font-black text-right">${stock.price}</div>
+                <div className="flex-grow justify-end font-black text-right">${stock.price.toFixed(2)}</div>
             </div>
             {/* Delta */}
             <div className="flex flex-row items-center">

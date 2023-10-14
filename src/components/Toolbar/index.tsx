@@ -16,7 +16,7 @@ export default function Toolbar({}: ToolbarProps) {
             {/* Search Bar */}
             <div className="rounded-lg flex flex-row m-auto justify-center w-1/2 h-1/2 overflow-hidden bg-lime-500">
                 <SearchSVG className={`transition my-auto mx-2 text-lg ${selected ? "scale-125" : "scale-100"}`} />
-                <input className="flex-grow outline-none pl-2 bg-yellow-700" type="text" placeholder="Search stock..." onFocus={() => setSelected(true)} onBlur={() => setSelected(false)}/>
+                <input className="flex-grow outline-none pl-2 bg-yellow-700" type="text" placeholder="Search stock..." onFocus={() => setSelected(true)} onBlur={() => setSelected(false)} />
             </div>
             {/* Personalization */}
             <div className="flex flex-row flex-grow m-auto justify-end items-center">

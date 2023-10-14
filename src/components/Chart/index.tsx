@@ -19,10 +19,14 @@ export default function Chart({ className, width, height, inComponent = false, p
     return (
         <AreaChart className={className} width={width || 400} height={height || 350} data={convertToTimeseries(prices)}>
             {!inComponent ? <defs>
-                {[["#aaa", "green"], ["#357ae4", "blue"]].map((data) => <linearGradient id={data[1]} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={data[0]} stopOpacity={0.8} />
-                    <stop offset="95%" stopColor={data[0]} stopOpacity={0} />
-                </linearGradient>)}
+                <linearGradient id={"green"} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#aaa" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#aaa" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id={"blue"} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#357ae4" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#357ae4" stopOpacity={0} />
+                </linearGradient>
             </defs> : <defs>
                 <linearGradient id={`gradient-${ticker}`} x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor={color} stopOpacity={0.8}/>
