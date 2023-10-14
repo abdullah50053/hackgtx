@@ -21,7 +21,7 @@ export default function Watchlist({ watched }: WatchlistProps) {
     }
     const scrollButton = (left: boolean): React.JSX.Element => {
         return (
-            <div className={`absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full flex p-1 shadow-sm bg-gray-100 hover:brightness-90 cursor-pointer ${left ? "left-0 -rotate-90" : "left-full rotate-90"}`} onClick={() => {
+            <div className={`absolute transition top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full flex p-1 shadow-lg bg-gray-50 hover:brightness-90 cursor-pointer ${left ? "left-0 -rotate-90" : "left-full rotate-90"}`} onClick={() => {
                 if (watchedContainerRef.current) {
                     watchedContainerRef.current.scroll({ behavior: "smooth", left: Math.min(watchedContainerRef.current.clientWidth, Math.max(0, watchedContainerRef.current.scrollLeft - (left ? WIDTH : -WIDTH))) })
                 }
