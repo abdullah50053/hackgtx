@@ -12,7 +12,7 @@ export default function MainContainer({}: MainContainerProps) {
         prices.push(Math.random() * 10)
     }
     return (
-        <div className="flex flex-grow flex-col m-0 p-0 w-auto h-full bg-yellow-500 overflow-y-auto overflow-x-hidden items-start">
+        <div className="scrollbar flex flex-grow flex-col m-0 p-0 w-auto h-full bg-yellow-500 overflow-y-auto overflow-x-hidden items-start">
             <Toolbar />
             <Watchlist />
             <Info stock={{

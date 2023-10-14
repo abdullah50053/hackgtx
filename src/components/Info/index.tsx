@@ -40,7 +40,7 @@ export default function Info({ stock, prices, lastUpdate }: InfoProps) {
                     <div className="">Last updated {lastUpdate.toDateString()}</div>
                 </div>
             </div>
-            <div className="w-full h-96">
+            <div className="w-full h-96 mt-8">
                 <Chart inComponent={false} prices={prices} ticker={stock.ticker} />
             </div>
         </div>
