@@ -55,9 +55,9 @@ export default function Watchlist({ watched }: WatchlistProps) {
         })
     }
     return (
-        <div className="flex flex-col w-full h-56 pt-10 px-12 bg-black">
-            <div className="text-xl font-bold content-start">My Watchlist</div>
-            <div className="scrollbar rounded-2xl flex flex-grow flex-row items-center w-full mt-3 mb-5 overflow-x-auto bg-white">
+        <div className="flex flex-col w-full h-56 pt-10 px-12">
+            <div className="text-xl text-black font-bold content-start">My Watchlist</div>
+            <div className="scrollbar rounded-2xl flex flex-grow flex-row items-center w-full mt-3 mb-5 bg-white overflow-x-auto">
                 {watchedComponents.length > 0 ? watchedComponents : <div className="flex-grow text-center text-6xl font-black text-gray-300 select-none">NO WATCHED STOCKS</div>}
             </div>
         </div>

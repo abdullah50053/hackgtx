@@ -17,9 +17,9 @@ interface InfoProps {
 
 export default function Info({ stock, prices, lastUpdate }: InfoProps) {
     return (
-        <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 bg-orange-500">
+        <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 text-black bg-white">
             {/* Top Bar */}
-            <div className="flex flex-row w-full h-fit bg-blue-500">
+            <div className="flex flex-row w-full h-fit">
                 {/* Icon + Name + Ticker */}
                 <div className="flex flex-row items-center">
                     {stock.iconUrl ? <img src={stock.iconUrl!} className="w-12 h-12"></img> : <MissingSVG className="w-12 h-12" />}
@@ -40,6 +40,7 @@ export default function Info({ stock, prices, lastUpdate }: InfoProps) {
                     <div className="">Last updated {lastUpdate.toDateString()}</div>
                 </div>
             </div>
+            <div className="m-auto mt-2 w-full h-1 bg-gray-200" />
             <div className="w-full h-96 mt-8">
                 <Chart inComponent={false} prices={prices} ticker={stock.ticker} />
             </div>

@@ -49,6 +49,7 @@ export default function ChatContainer({ }: ChatContainerProps) {
           left: true
         }
       ])
+    const [selected, setSelected] = useState<boolean>(false)
     const sendChat = (chat: Chat): void => {
       let newChats = chats.map((c) => c)
       newChats.push(chat)
@@ -59,16 +60,16 @@ export default function ChatContainer({ }: ChatContainerProps) {
         chatboxRef.current && chatboxRef.current!.scrollIntoView({ behavior: "smooth" })
     }, [chats])
     let chatComponents: React.JSX.Element[] = []
-    chats.forEach((chat) => chatComponents.push(<ChatBubble key={Math.random()} chat={chat} color={chat.sender === "You" ? "bg-blue-500" : "bg-gray-500"} />))
+    chats.forEach((chat) => chatComponents.push(<ChatBubble key={Math.random()} chat={chat} color={chat.sender === "You" ? "bg-blue-500" : "bg-gray-400"} />))
     return (
-        <div className="flex flex-col m-0 p-0 w-96 h-screen bg-gray-500">
-            <div className="items-center m-0 p-0 w-full h-16 bg-red-500"/>
-            <div className="scrollbar flex-grow m-0 p-0 w-full h-auto bg-green-500 overflow-y-auto">
+        <div className="flex flex-col m-0 p-0 w-96 h-screen bg-white">
+            <div className="items-center m-0 p-0 w-full h-16 bg-white"/>
+            <div className="scrollbar flex-grow m-0 p-0 w-full h-auto bg-white overflow-y-auto">
                 {chatComponents}
                 <div ref={chatboxRef} />
             </div>
-            <div className="flex m-0 p-0 items-center justify-center w-full h-fit bg-blue-500">
-                <input className="rounded-lg block text-black w-full h-fit p-2 bg-gray-200 outline-none" type="text" placeholder="Send a message" onKeyDown={(e) => {
+            <div className={`transition flex m-0 p-1 items-center justify-center w-full h-fit bg-white ${selected ? "brightness-95" : "brightness-100"}`}>
+                <input className="rounded-lg block text-black w-full h-fit p-2 bg-gray-200 outline-none" type="text" placeholder="Send a message" onFocus={() => setSelected(true)} onBlur={() => setSelected(false)} onKeyDown={(e) => {
                     const value = e.currentTarget.value
                     if (e.key !== "Enter" || !value) return
                     e.currentTarget.value = ""
