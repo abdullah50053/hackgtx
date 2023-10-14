@@ -97,7 +97,7 @@ def train(stock: str):
 
     # Train model
     lstm.fit(X_train, y_train, epochs=100, batch_size=8, verbose=1, shuffle=False)
-    
+
     # Predict
     y_pred = lstm.predict(X_test)
 
