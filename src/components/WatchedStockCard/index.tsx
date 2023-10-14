@@ -26,7 +26,9 @@ export default function WatchedStockCard({ stock }: WatchedStockCardProps) {
                     <div className="ml-2 font-bold">{stock.name}</div>
                 </div>
                 {/* Graph */}
-                <Chart className="ml-4" width={85} height={50} prices={prices} ticker={stock.ticker} delta={stock.delta} inComponent={true} />
+                <div className="ml-auto w-16 h-12 justify-end">
+                    <Chart prices={prices} ticker={stock.ticker} delta={stock.delta} inComponent={true} />
+                </div>
             </div>
             {/* Stock Price */}
             <div className="flex flex-row items-center">

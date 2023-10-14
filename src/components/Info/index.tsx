@@ -2,6 +2,7 @@ import dynamic from "next/dynamic"
 import { Stock } from "@/lib/types";
 import MissingSVG from "../svg/MissingSVG";
 import ArrowLongSVG from "../svg/ArrowLongSVG";
+import { ResponsiveContainer } from "recharts";
 
 const Chart = dynamic(
     import("../Chart"),
@@ -16,7 +17,7 @@ interface InfoProps {
 
 export default function Info({ stock, prices, lastUpdate }: InfoProps) {
     return (
-        <div className="rounded-3xl flex flex-col w-10/12 mt-6 mx-auto p-4 bg-orange-500">
+        <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 bg-orange-500">
             {/* Top Bar */}
             <div className="flex flex-row w-full h-fit bg-blue-500">
                 {/* Icon + Name + Ticker */}
@@ -39,7 +40,9 @@ export default function Info({ stock, prices, lastUpdate }: InfoProps) {
                     <div className="">Last updated {lastUpdate.toDateString()}</div>
                 </div>
             </div>
-            <Chart className="mt-4" inComponent={false} prices={prices} ticker={stock.ticker} />
+            <div className="w-full h-96">
+                <Chart inComponent={false} prices={prices} ticker={stock.ticker} />
+            </div>
         </div>
     )
 }
