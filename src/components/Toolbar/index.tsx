@@ -12,7 +12,7 @@ interface ToolbarProps {
 export default function Toolbar({}: ToolbarProps) {
     const [selected, setSelected] = useState<boolean>(false)
     return (
-        <div className="flex flex-row content-start items-center w-full h-20 px-8 bg-purple-500">
+        <div className="flex flex-shrink-0 flex-row content-start items-center w-full h-20 px-8 bg-purple-500">
             {/* Search Bar */}
             <div className="rounded-lg flex flex-row m-auto justify-center w-1/2 h-1/2 overflow-hidden bg-lime-500">
                 <SearchSVG className={`transition my-auto mx-2 text-lg ${selected ? "scale-125" : "scale-100"}`} />
