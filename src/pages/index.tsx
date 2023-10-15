@@ -9,30 +9,22 @@ interface HomeProps {
 }
 
 export default function Home({ stocks }: HomeProps) {
-  return <div />
   return (
     <div className="flex flex-row m-0 p-0 w-screen h-screen text-custom-gray-4">
       <ChatContainer />
-      <MainContainer stocks={[]} currentStockIndex={0} />
+      <MainContainer stocks={stocks} currentStockIndex={0} />
     </div>
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const watchedTickers = ["TSLA", "NFLX", "AMD", "MSFT", "AAPL"]
-  console.log(watchedTickers)
   const stocks: Stock[] = []
-  fetch("/api/today?stock=AAPL", {
-    mode: "no-cors"
-  }).then((res) => console.log(res))
 
-  /*await watchedTickers.forEach(async (ticker) => {
-    let res = await fetch("localhost:3000/api/today", {
+  for (let ticker of watchedTickers) {
+    let res = await fetch(`http://localhost:3000/api/today?stock=${ticker}`, {
       mode: "cors",
-      method: "POST",
-      body: JSON.stringify({
-        stock: ticker
-      })
+      method: "GET"
     })
     const data = await res.json()
     if (res.status !== 200) {
@@ -42,12 +34,11 @@ export async function getStaticProps() {
     stocks.push({
       ticker,
       name: "AAPL",
-      delta: prices.delta,
-      price: prices.price,
+      delta: data.delta,
+      price: data.price,
       prices
     })
-  })*/
-  console.log(stocks)
+  }
 
   return {
     props: {

@@ -31,9 +31,9 @@ export default function Info({ stock, prices, lastUpdate }: InfoProps) {
                 {/* Basic Stats */}
                 <div className="flex flex-grow flex-col items-end justify-center">
                     <div className="flex flex-row items-center">
-                        <div className={`flex flex-row items-center justify-center rounded-full text-center w-fit px-2 py-1 text-white ${stock.delta > 0 ? "bg-green-700" : "bg-red-600"}`}>
-                            <div className="font-black">{stock.delta}%</div>
-                            <ArrowLongSVG className={`w-3 h-3 m-0 p-0 ${stock.delta > 0 ? "" : "rotate-180"}`} />
+                        <div className={`flex flex-row items-center justify-center rounded-full text-center w-fit px-2 py-1 text-white ${stock.delta >= 0 ? "bg-green-700" : "bg-red-600"}`}>
+                            <div className="font-black">{stock.delta.toFixed(2)}%</div>
+                            <ArrowLongSVG className={`w-3 h-3 m-0 p-0 ${stock.delta >= 0 ? "" : "rotate-180"}`} />
                         </div>
                         <div className="text-right text-2xl font-bold pl-2">${stock.price.toFixed(2)}</div>
                     </div>

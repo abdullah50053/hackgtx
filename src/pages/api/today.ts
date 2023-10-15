@@ -19,7 +19,7 @@ const stockOpenPrices = data.stockOpenPrices;
 // GET /today?stock={stock}
 export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     // Get the stock from the query string
-    const stock = req.body.stock as string;
+    const stock = req.query.stock as string;
     if (stocks.indexOf(stock) === -1) {
         res.status(404).json({ price: 0, delta: 0, prices: [], error: 'Stock not found' });
         return;
@@ -62,7 +62,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
         prices.push(prev);
     }
 
-    res.status(200).json({ price: open, delta: prices[prices.length - 1] / prices[0], prices, error: null });
+    res.status(200).json({ price: open, delta: prices[prices.length - 1] / open - 1, prices, error: null });
 }
 
 // Returns a random integer between min (inclusive) and max (exclusive)
