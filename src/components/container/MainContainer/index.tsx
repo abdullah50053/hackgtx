@@ -6,11 +6,12 @@ import { UserData, getUser } from "@/lib/user";
 
 interface MainContainerProps {
     user?: UserData
+    setUser: any
     stocks: Stock[]
     currentStockIndex: number
 }
 
-export default function MainContainer({ user, stocks, currentStockIndex }: MainContainerProps) {
+export default function MainContainer({ user, setUser, stocks, currentStockIndex }: MainContainerProps) {
     let prices = (stocks.length > 0 && currentStockIndex >= 0 && currentStockIndex < stocks.length) ? stocks[currentStockIndex].prices ?? [] : []
     const watchedStocks: Stock[] = []
     if (user) {
@@ -20,9 +21,9 @@ export default function MainContainer({ user, stocks, currentStockIndex }: MainC
     }
     return (
         <div className="scrollbar flex flex-grow flex-col m-0 p-0 w-auto h-full bg-gray-100 overflow-y-auto overflow-x-hidden items-start">
-            <Toolbar />
+            <Toolbar user={user} />
             <Watchlist watched={watchedStocks} />
-            <Info stock={stocks[currentStockIndex]} prices={prices} lastUpdate={new Date()}/>
+            <Info user={user} setUser={setUser} stock={stocks[currentStockIndex]} prices={prices} lastUpdate={new Date()}/>
         </div>
     )
 }

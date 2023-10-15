@@ -53,28 +53,29 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
   const [error, setError] = useState("");
   let user = getUser()!;
   return (
-    <div id="profile" className="absolute flex items-center justify-center w-full h-full bg-custom-modal z-10">
-      <div id="profileactual" className="relative flex flex-col items-center w-1/3 h-max p-3 bg-custom-gray-0 rounded-xl text-white">
+    <div id="profile" className="absolute flex items-center justify-center w-full h-full bg-gray-200 z-10">
+      <div id="profileactual" className="relative flex flex-col items-center w-1/3 h-max p-3 bg-gray-400 rounded-xl text-white">
         <div className="text-3xl font-black mb-7">Profile</div>
         <div className="text-xl font-bold my-3">First Name</div>
-        <input id="profilefirst" onChange={validateFirstName} className="w-1/2 bg-custom-gray-1 text-lg text-center rounded-lg" placeholder={user.first_name}></input>
+        <input id="profilefirst" onChange={validateFirstName} className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" placeholder={user.first_name}></input>
         <div className="text-xl font-bold my-3">Last Name</div>
-        <input id="profilelast" onChange={validateLastName} className="w-1/2 bg-custom-gray-1 text-lg text-center rounded-lg" placeholder={user.last_name}></input>
+        <input id="profilelast" onChange={validateLastName} className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" placeholder={user.last_name}></input>
         <div className="flex flex-row items-center justify-center mt-10">
-          <div className="rounded-xl text-center bg-custom-blue w-24 p-3 m-4 cursor-pointer hover:brightness-125 transition" onClick={() => {
+          <div className="rounded-xl text-center bg-blue-400 w-24 p-3 m-4 cursor-pointer hover:brightness-125 transition" onClick={() => {
             setLoading(true);
             if (!validateFirstName() || !validateLastName()) {
               setLoading(false);
               return setError("Invalid profile data...");
             }
-            fetch("/api/profile", {
+            fetch("http://localhost:3000/api/profile", {
               mode: 'cors',
               method: 'POST',
               body: JSON.stringify({
-                phone: user.phone,
+                email: user.email,
                 first_name: (document.getElementById("profilefirst") as HTMLInputElement).value,
                 last_name: (document.getElementById("profilelast") as HTMLInputElement).value,
                 watchlist: user.watchlist,
+                positions: user.positions
               }),
             }).then(async (result) => {
               if (result.status !== 200) {
@@ -88,8 +89,9 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
                 first_name: data.first_name,
                 last_name: data.last_name,
                 password: user.password,
-                phone: user.phone,
+                email: user.email,
                 watchlist: user.watchlist,
+                positions: user.positions
               };
               localStorage.setItem("user", JSON.stringify(userData));
               setUser(userData);
@@ -101,7 +103,7 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
           }}>Save</div>
         </div>
         {loading && <LoadSVG className="w-6 h-6 animate-spin" />}
-        {error && <div className="text-center text-custom-red font-black">{error}</div>}
+        {error && <div className="text-center text-red-400 font-black">{error}</div>}
       </div>
     </div>
   )

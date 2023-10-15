@@ -62,7 +62,7 @@ export default function ChatContainer({ }: ChatContainerProps) {
     let chatComponents: React.JSX.Element[] = []
     chats.forEach((chat) => chatComponents.push(<ChatBubble key={Math.random()} chat={chat} color={chat.sender === "You" ? "bg-blue-500" : "bg-gray-400"} />))
     return (
-        <div className="flex flex-col m-0 p-0 w-3/5 h-screen bg-white">
+        <div className="flex flex-col m-0 p-0 w-96 h-screen bg-white">
             <div className="items-center m-0 p-0 w-full h-16 bg-white"/>
             <div className="scrollbar flex-grow m-0 p-0 w-full h-auto bg-white overflow-y-auto">
                 {chatComponents}
