@@ -1,6 +1,7 @@
 # Packages to Install
 
 - flask
+- yfinance
 
 # Exec
 
