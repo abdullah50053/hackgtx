@@ -170,7 +170,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
             money: user.money
           };
           localStorage.setItem("user", JSON.stringify(userData));
-          setUser(undefined);
+          setUser(userData);
         })
         .catch((err) => {
           console.log(err);
