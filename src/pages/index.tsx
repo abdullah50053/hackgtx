@@ -1,7 +1,10 @@
+import Login from "@/components/Auth";
+import Profile from "@/components/Profile";
 import ChatContainer from "@/components/container/ChatContainer";
 import MainContainer from "@/components/container/MainContainer";
 import { Chat, Stock } from "@/lib/types";
-import { useState } from "react";
+import { UserData, getUser } from "@/lib/user";
+import { useEffect, useState } from "react";
 
 
 interface HomeProps {
@@ -9,16 +12,31 @@ interface HomeProps {
 }
 
 export default function Home({ stocks }: HomeProps) {
+  const [user, setUser] = useState<UserData | undefined>(undefined)
+  const [profile, setProfileView] = useState(false)
+  const [watchedStocks, setWatchedStocks] = useState<string[]>([])
+
+  useEffect(() => {
+    if (user) {
+      if (watchedStocks.length !== user.watchlist.length) setWatchedStocks(user.watchlist);
+      if (!profile && (!user.first_name || !user.last_name)) setProfileView(true);
+      return;
+    }
+    setUser(getUser());
+  })
+
   return (
     <div className="flex flex-row m-0 p-0 w-screen h-screen text-custom-gray-4">
       <ChatContainer />
-      <MainContainer stocks={stocks} currentStockIndex={0} />
+      <MainContainer user={user} stocks={stocks} currentStockIndex={-1} />
+      {!user && <Login setUser={setUser} />}
+      {profile && <Profile setUser={setUser} setProfile={setProfileView} />}
     </div>
   )
 }
 
 export async function getServerSideProps() {
-  const watchedTickers = ["TSLA", "NFLX", "AMD", "MSFT", "AAPL"]
+  const watchedTickers = ["AAPL", "SBUX", "MSFT", "CSCO", "QCOM", "META", "AMZN", "TSLA", "AMD", "NFLX"]
   const stocks: Stock[] = []
 
   for (let ticker of watchedTickers) {

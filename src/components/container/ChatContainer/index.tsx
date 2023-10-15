@@ -7,7 +7,7 @@ interface ChatContainerProps {
 }
 
 export default function ChatContainer({ }: ChatContainerProps) {
-    const [chats, setChats] = useState<Chat[]>([
+    const [chats, setChats] = useState<Chat[]>(/*[
         {
           sender: "You",
           text: "Should I buy this stock?",
@@ -48,7 +48,7 @@ export default function ChatContainer({ }: ChatContainerProps) {
           text: "Based on current market sentiment, it's likely that AAPL will go up in price.",
           left: true
         }
-      ])
+      ]*/[])
     const [selected, setSelected] = useState<boolean>(false)
     const sendChat = (chat: Chat): void => {
       let newChats = chats.map((c) => c)
