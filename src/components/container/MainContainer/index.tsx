@@ -34,7 +34,9 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
             first_name: user.first_name,
             last_name: user.last_name,
             watchlist: user.watchlist,
-            positions: user.positions
+            positions: user.positions,
+            experience: user.experience,
+            money: user.money
           }),
         }).then(async (result) => {
           if (result.status !== 200) {
@@ -48,7 +50,8 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
             email: user.email,
             watchlist: user.watchlist,
             positions: user.positions,
-            experience: user.experience
+            experience: user.experience,
+            money: user.money
           };
           localStorage.setItem("user", JSON.stringify(userData));
           setUser(undefined);

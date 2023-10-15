@@ -75,7 +75,8 @@ export default function Login({ setUser }: LoginProps) {
                 email: data.email,
                 watchlist: data.watchlist,
                 positions: data.positions,
-                experience: data.experience
+                experience: data.experience,
+                money: data.money
               };
               localStorage.setItem("user", JSON.stringify(userData));
               setUser(userData);
@@ -114,7 +115,8 @@ export default function Login({ setUser }: LoginProps) {
                 email: data.email,
                 watchlist: data.watchlist,
                 positions: data.positions,
-                experience: data.experience
+                experience: data.experience,
+                money: data.money
               };
               localStorage.setItem("user", JSON.stringify(userData));
               setUser(userData);

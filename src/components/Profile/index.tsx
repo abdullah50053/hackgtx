@@ -101,7 +101,8 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
                 email: user.email,
                 watchlist: user.watchlist,
                 positions: user.positions,
-                experience: user.experience
+                experience: user.experience,
+                money: user.money
               };
               localStorage.setItem("user", JSON.stringify(userData));
               setUser(userData);
