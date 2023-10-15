@@ -4,10 +4,12 @@ import WatchedStockCard from "../WatchedStockCard"
 import AngleSVG from "../svg/AngleSVG"
 
 interface WatchlistProps {
+    stocks: Stock[]
     watched?: Stock[]
+    setCurrentStockIndex: any
 }
 
-export default function Watchlist({ watched }: WatchlistProps) {
+export default function Watchlist({ stocks, watched, setCurrentStockIndex }: WatchlistProps) {
     const WIDTH = 288
     const [overflowing, setOverflowing] = useState<boolean>(false)
     const watchedContainerRef = useRef<HTMLDivElement>(null)
@@ -32,7 +34,7 @@ export default function Watchlist({ watched }: WatchlistProps) {
     let watchedComponents: React.JSX.Element[] = []
     if (watched) {
         watched.forEach((stock) => {
-            watchedComponents.push(<WatchedStockCard key={stock.ticker} stock={stock} />)
+            watchedComponents.push(<WatchedStockCard key={stock.ticker} stock={stock} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} />)
         })
     }
     return (

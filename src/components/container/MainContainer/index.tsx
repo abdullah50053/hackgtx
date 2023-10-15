@@ -23,7 +23,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
     return (
         <div className="scrollbar flex flex-grow flex-col m-0 p-0 w-auto h-full bg-gray-100 overflow-y-auto overflow-x-hidden items-start">
             <Toolbar user={user} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} />
-            <Watchlist watched={watchedStocks} />
+            <Watchlist stocks={stocks} watched={watchedStocks} setCurrentStockIndex={setCurrentStockIndex} />
             <Info user={user} stock={stocks[currentStockIndex]} prices={prices} lastUpdate={new Date()} updateWatchlist={(user: UserData) => {
         fetch("http://localhost:3000/api/profile", {
           mode: 'cors',
