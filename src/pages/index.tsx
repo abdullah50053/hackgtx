@@ -22,21 +22,32 @@ export async function getServerSideProps() {
   const stocks: Stock[] = []
 
   for (let ticker of watchedTickers) {
-    let res = await fetch(`http://localhost:3000/api/today?stock=${ticker}`, {
+    const priceRes = await fetch(`http://localhost:3000/api/prices/today?stock=${ticker}`, {
       mode: "cors",
       method: "GET"
     })
-    const data = await res.json()
-    if (res.status !== 200) {
-      console.error(res.status, res.statusText, data.error)
+    const priceData = await priceRes.json()
+    if (priceRes.status !== 200) {
+      console.error(priceRes.status, priceRes.statusText, priceData.error)
     }
-    const prices = data.prices
+    const prices = priceData.prices
+
+    const metaRes = await fetch(`http://localhost:3000/api/stock?stock=${ticker}`, {
+      mode: "cors",
+      method: "GET"
+    })
+    const metaData = await metaRes.json()
+    if (metaRes.status !== 200) {
+      console.error(metaRes.status, metaRes.statusText, metaData.error)
+    }
+
     stocks.push({
       ticker,
-      name: "AAPL",
-      delta: data.delta,
-      price: data.price,
-      prices
+      name: metaData.name,
+      delta: 1,
+      iconUrl: metaData.icon,
+      price: metaData.price,
+      prices: prices
     })
   }
 

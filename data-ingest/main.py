@@ -25,7 +25,7 @@ def main():
     # Get the 5 minute data for the last 5 days
     week_data = []
     for d in stocks:
-        stock, name = d.split()
+        stock, name, icon = d.split()
         data = pull_data(stock, "1m", "5d")
         print(
             "Got weekly data for "
@@ -43,7 +43,7 @@ def main():
     # Get the hour data for the last month
     month_data = []
     for d in stocks:
-        stock, name = d.split()
+        stock, name, icon = d.split()
         data = pull_data(stock, "1h", "1mo")
         print(
             "Got monthly data for "
@@ -56,7 +56,7 @@ def main():
     # Get the daily data for the last year
     year_data = []
     for d in stocks:
-        stock, name = d.split()
+        stock, name, icon = d.split()
         data = pull_data(stock, "1d", "1y")
         print(
             "Got yearly data for "
@@ -69,7 +69,7 @@ def main():
     # Get the open prices for the last day
     stock_open_prices = []
     for d in stocks:
-        stock, name = d.split()
+        stock, name, icon = d.split()
         data = pull_data(stock, "1d", "1d")
         print(
             "Got open price for "
@@ -83,6 +83,7 @@ def main():
     data = {
         "stocks": [stock.split()[0] for stock in stocks],
         "stockNames": [stock.split()[1] for stock in stocks],
+        "stockIcons": [stock.split()[2] for stock in stocks],
         "stockOpenPrices": stock_open_prices,
         "week": week_data,
         "month": month_data,

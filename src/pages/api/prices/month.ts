@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import data from '../../data.json';
+import data from '../../../data.json';
 
 type ResponseData = {
     prices: number[];
@@ -16,7 +16,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
     }
 
     // Get the prices for the stock
-    const prices = data.week[data.stocks.indexOf(stock)];
+    const prices = data.month[data.stocks.indexOf(stock)];
 
     res.status(200).json({ prices, error: null });
 }

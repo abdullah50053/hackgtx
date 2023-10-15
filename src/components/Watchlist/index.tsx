@@ -13,10 +13,8 @@ export default function Watchlist({ watched }: WatchlistProps) {
     const watchedContainerRef = useRef<HTMLDivElement>(null)
     const isOverflowing = (ref: React.RefObject<HTMLDivElement>): boolean => {
         if (!ref.current) {
-            console.log(false)
             return false
         }
-        console.log(ref.current.scrollWidth > ref.current.clientWidth)
         return ref.current.scrollWidth > ref.current.clientWidth
     }
     const scrollButton = (left: boolean): React.JSX.Element => {
