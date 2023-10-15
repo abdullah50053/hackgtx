@@ -76,7 +76,7 @@ export default function ChatContainer({ }: ChatContainerProps) {
                 {chatComponents}
                 <div ref={chatboxRef} />
             </div>
-            <div className="flex flex-row m-0 p-1 items-center justify-center text-black w-max h-fit overflow-x-auto bg-white">
+            <div className="flex flex-row m-0 p-1 items-center text-black h-fit overflow-x-auto bg-white">
               {promptComponents}
             </div>
             <div className={`transition flex m-0 p-1 items-center justify-center w-full h-fit bg-white ${selected ? "brightness-95" : "brightness-100"}`}>
