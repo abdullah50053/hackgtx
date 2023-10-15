@@ -4,12 +4,13 @@ import GearSVG from "../svg/GearSVG";
 import AngleSVG from "../svg/AngleSVG";
 import ProfileSVG from "../svg/ProfileSVG";
 import BellSVG from "../svg/BellSVG";
+import { UserData } from "@/lib/user";
 
 interface ToolbarProps {
-
+    user?: UserData
 }
 
-export default function Toolbar({}: ToolbarProps) {
+export default function Toolbar({ user }: ToolbarProps) {
     const [selected, setSelected] = useState<boolean>(false)
     return (
         <div className="flex flex-shrink-0 flex-row content-start items-center w-full h-20 px-8 bg-white">
@@ -25,8 +26,7 @@ export default function Toolbar({}: ToolbarProps) {
                 <div className="w-0.5 h-5 mx-2 bg-black" />
                 <div className="flex flex-row my-auto items-center justify-center cursor-pointer">
                     <ProfileSVG className="mx-1 font-black" />
-                    <div className="text-center select-none font-bold text-black">Nick Burnett</div>
-                    <AngleSVG className="transition my-auto mx-1 text-base rotate-180" />
+                    <div className="text-center select-none font-bold text-black">{user && `${user.first_name} ${user.last_name}`}</div>
                 </div>
             </div>
         </div>

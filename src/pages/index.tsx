@@ -28,7 +28,7 @@ export default function Home({ stocks }: HomeProps) {
   return (
     <div className="flex flex-row m-0 p-0 w-screen h-screen text-custom-gray-4">
       <ChatContainer />
-      <MainContainer user={user} stocks={stocks} currentStockIndex={-1} />
+      <MainContainer user={user} setUser={setUser} stocks={stocks} currentStockIndex={0} />
       {!user && <Login setUser={setUser} />}
       {profile && <Profile setUser={setUser} setProfile={setProfileView} />}
     </div>
