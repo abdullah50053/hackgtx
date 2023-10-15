@@ -135,7 +135,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
                   email: user.email,
                   watchlist: user.watchlist,
                   experience: user.experience,
-                  money: user.money,
+                  money: user.money + (action === "sell" ? stock.price : -stock.price),
                   positions
                 }
                 localStorage.setItem("user", JSON.stringify(userData))

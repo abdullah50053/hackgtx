@@ -45,7 +45,7 @@ export default function Toolbar({ user, giveMoney, stocks, positionState, setCur
             {/* Earnings */}
             <div className="flex flex-row text-2xl w-fit text-center font-bold text-black mx-8 cursor-pointer" onClick={() => {
                 giveMoney(100)
-            }}><span className="text-green-700 text-black">$</span>{totalEarnings.toFixed(2)}</div>
+            }}><span className="text-green-700 text-black">$</span>{user?.money.toFixed(2)}</div>
             {/* Personalization */}
             <div className="flex flex-row flex-grow m-auto justify-end items-center">
                 <BellSVG className="transition my-auto mx-1 text-lg hover:scale-125 cursor-pointer" />
