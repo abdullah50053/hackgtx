@@ -26,7 +26,7 @@ export default function Info({ user, updateWatchlist, positionState, updatePosit
     if (!stock) return <div className="w-full"/>
     const position = (positionState ?? []).find((p: any) => p.ticker === stock.ticker)
     const returns = position ? position.returns : 0
-    const userPosition = user?.positions.find((p) => p.ticker === position.ticker)
+    const userPosition = user?.positions.find((p) => p.ticker === stock.ticker)
     const shares = userPosition ? userPosition.shares : undefined
     return (
         <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 text-black bg-white">

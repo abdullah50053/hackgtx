@@ -24,37 +24,46 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
         })
     }
     useEffect(() => {
-      if (user) {
-        stocks.forEach((s) => {
-          if (user.watchlist.includes(s.ticker)) watchedStocks.push(s)
-        })
-      if (user.positions.length !== positionState.length) user.positions.forEach((p) => {
-        fetch(`http://localhost:3000/api/trade/${user.email}/${p.ticker}`, {
-        mode: "cors",
-        method: "GET",
-        }).then(async (res) => {
+      (async () => {
+        if (user) {
+          stocks.forEach((s) => {
+            if (user.watchlist.includes(s.ticker)) watchedStocks.push(s)
+          })
+        if (user.positions.length !== positionState.length) {
+          let newPosition = (positionState ?? []).map((x: any) => x)
+          for (let p of user.positions) {
+            let res = await fetch(`http://localhost:3000/api/trade/${user.email}/${p.ticker}`, {
+          mode: "cors",
+          method: "GET",
+          })
           if (res.status !== 200) {
             return console.error(res)
           }
           const pos = (await res.json()).position
           if (pos) {
-            let newPosition = (positionState ?? []).map((x: any) => x)
             newPosition.push({
               ticker: pos.ticker,
               shares: pos.shares,
               returns: pos.return
             })
-            setPositionState(newPosition)
           }
-        })
-      })
-        return;
-      }
-      setUser(getUser());
+          }
+          setPositionState(newPosition)
+        }
+          return;
+        }
+        setUser(getUser());
+      })()
+    })
+    let earnings = 0
+    positionState.forEach((p: any) => {
+      let stock = stocks.find((s) => s.ticker === p.ticker) ?? { price: 1 }
+      let pos = user?.positions.find((s) => s.ticker === p.ticker) ?? { lastPrice: stock.price }
+      earnings += p.shares * pos.lastPrice
     })
     return (
         <div className="scrollbar flex flex-grow flex-col m-0 p-0 w-auto h-full bg-gray-100 overflow-y-auto overflow-x-hidden items-start">
-            <Toolbar user={user} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} setProfileView={setProfileView} />
+            <Toolbar user={user} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} setProfileView={setProfileView} totalEarnings={earnings} />
             <Watchlist stocks={stocks} watched={watchedStocks} setCurrentStockIndex={setCurrentStockIndex} positionState={positionState} />
             <Info user={user} stock={stocks[currentStockIndex]} prices={prices} positionState={positionState} lastUpdate={new Date()} updatePosition={(user: UserData, stock: Stock, action: "buy" | "sell") => {
               fetch(`http://localhost:3000/api/trade/${action}`, {

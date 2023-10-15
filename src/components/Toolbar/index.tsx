@@ -12,9 +12,10 @@ interface ToolbarProps {
     stocks: Stock[]
     setCurrentStockIndex: any
     setProfileView: any
+    totalEarnings: number
 }
 
-export default function Toolbar({ user, stocks, setCurrentStockIndex, setProfileView }: ToolbarProps) {
+export default function Toolbar({ user, stocks, totalEarnings, setCurrentStockIndex, setProfileView }: ToolbarProps) {
     const [selected, setSelected] = useState<boolean>(false)
     return (
         <div className="flex flex-shrink-0 flex-row content-start items-center w-full h-20 px-8 bg-white">
@@ -32,6 +33,8 @@ export default function Toolbar({ user, stocks, setCurrentStockIndex, setProfile
                     setCurrentStockIndex(stockIndex)
                 }} />
             </div>
+            {/* Earnings */}
+            <div className="flex flex-row text-2xl w-fit text-center font-bold text-black mx-8"><span className="text-green-700 text-black">$</span>{totalEarnings.toFixed(2)}</div>
             {/* Personalization */}
             <div className="flex flex-row flex-grow m-auto justify-end items-center">
                 <BellSVG className="transition my-auto mx-1 text-lg hover:scale-125 cursor-pointer" />
