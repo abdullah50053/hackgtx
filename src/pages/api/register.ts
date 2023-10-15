@@ -17,7 +17,9 @@ export async function handleRegister(req: NextApiRequest, res: NextApiResponse) 
         password: data.password,
         email: data.email,
         watchlist: [],
-        positions: []
+        positions: [],
+        experience: "beginner",
+        money: 0
       };
       await setDoc(doc(db, `account/${data.email}`), {
         ...newData
