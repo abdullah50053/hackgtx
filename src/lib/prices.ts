@@ -1,5 +1,5 @@
 import { getFirestore, collection, setDoc, doc, getDoc } from 'firebase/firestore';
-import app from '../lib/firebase';
+import app from './firebase';
 import data from '../data.json';
 
 const MIN_DELTA = 0.01;

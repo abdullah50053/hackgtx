@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../../data.json';
-import { updatePrices } from '@/api-fb/prices';
+import { updatePrices } from '@/lib/prices';
 
 type ResponseData = {
     prices: number[];
