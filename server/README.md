@@ -1,10 +1,7 @@
 # Packages to Install
 
 - flask
-- scikit-learn
-- keras
 - yfinance
-- tensorflow
 
 # Exec
 
