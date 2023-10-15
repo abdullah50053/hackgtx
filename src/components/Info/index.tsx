@@ -16,6 +16,7 @@ interface InfoProps {
 }
 
 export default function Info({ stock, prices, lastUpdate }: InfoProps) {
+    if (!stock) return <div className="w-full"/>
     return (
         <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 text-black bg-white">
             {/* Top Bar */}
