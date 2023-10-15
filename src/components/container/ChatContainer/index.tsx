@@ -1,4 +1,5 @@
 import ChatBubble from "@/components/ChatBubble"
+import ChartSVG from "@/components/svg/ChartSVG"
 import { Chat } from "@/lib/types"
 import { useEffect, useRef, useState } from "react"
 
@@ -63,7 +64,10 @@ export default function ChatContainer({ }: ChatContainerProps) {
     chats.forEach((chat) => chatComponents.push(<ChatBubble key={Math.random()} chat={chat} color={chat.sender === "You" ? "bg-blue-500" : "bg-gray-400"} />))
     return (
         <div className="flex flex-col m-0 p-0 w-96 h-screen bg-white">
-            <div className="items-center m-0 p-0 w-full h-16 bg-white"/>
+            <div className="flex flex-row items-center justify-center mx-auto p-0 w-fit h-16 bg-white">
+              <ChartSVG className="w-10 h-10 mr-8" />
+              <div className="text-black text-center text-lg font-bold">Cash Course</div>
+            </div>
             <div className="scrollbar flex-grow m-0 p-0 w-full h-auto bg-white overflow-y-auto">
                 {chatComponents}
                 <div ref={chatboxRef} />

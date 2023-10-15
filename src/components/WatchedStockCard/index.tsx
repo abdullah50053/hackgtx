@@ -9,13 +9,22 @@ const Chart = dynamic(
 )
 
 interface WatchedStockCardProps {
+    stocks: Stock[]
     stock: Stock
+    setCurrentStockIndex: any
 }
 
-export default function WatchedStockCard({ stock }: WatchedStockCardProps) {
+export default function WatchedStockCard({ stocks, stock, setCurrentStockIndex }: WatchedStockCardProps) {
     let prices = stock.prices ?? []
     return (
-        <div className="transition text-black flex flex-shrink-0 flex-col w-72 h-full px-12 py-6 hover:bg-gray-200 cursor-pointer">
+        <div className="transition text-black flex flex-shrink-0 flex-col w-72 h-full px-12 py-6 hover:bg-gray-200 cursor-pointer" onClick={() => {
+            let stockIndex = -1
+            stocks.forEach((s, i) => {
+                if (s.ticker === stock.ticker) stockIndex = i
+            })
+            if (stockIndex === -1) return
+            setCurrentStockIndex(stockIndex)
+        }}>
             <div className="flex flex-row">
                 {/* Icon + Name */}
                 <div className="flex flex-row items-center">

@@ -15,6 +15,7 @@ export default function Home({ stocks }: HomeProps) {
   const [user, setUser] = useState<UserData | undefined>(undefined)
   const [profile, setProfileView] = useState(false)
   const [watchedStocks, setWatchedStocks] = useState<string[]>([])
+  const [currentStockIndex, setCurrentStockIndex] = useState<number>(0)
 
   useEffect(() => {
     if (user) {
@@ -28,7 +29,7 @@ export default function Home({ stocks }: HomeProps) {
   return (
     <div className="flex flex-row m-0 p-0 w-screen h-screen text-custom-gray-4">
       <ChatContainer />
-      <MainContainer user={user} setUser={setUser} stocks={stocks} currentStockIndex={0} />
+      <MainContainer user={user} setUser={setUser} stocks={stocks} currentStockIndex={currentStockIndex} setCurrentStockIndex={setCurrentStockIndex} setProfileView={setProfileView} />
       {!user && <Login setUser={setUser} />}
       {profile && <Profile setUser={setUser} setProfile={setProfileView} />}
     </div>

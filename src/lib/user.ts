@@ -5,7 +5,8 @@ export interface UserData {
     last_name: string;
     watchlist: string[];
     positions: Position[];
-    money: number;
+    experience: "beginner" | "intermediate" | "advanced"
+    money: number
   }
 export interface Position {
   ticker: string
