@@ -92,6 +92,6 @@ export async function getReturn(email: string, ticker: string): Promise<Position
     return {
         ticker: ticker,
         shares: position.shares,
-        return: position.shares * price / position.lastPrice,
+        return: (position.lastPrice + price) / position.lastPrice,
     };
 }
