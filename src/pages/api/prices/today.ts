@@ -8,7 +8,7 @@ type ResponseData = {
 };
 
 const MIN_DELTA = 0.01;
-const MAX_DELTA = 0.1;
+const MAX_DELTA = 0.2;
 
 const stocks = data.stocks;
 const stockOpenPrices = data.stockOpenPrices;
@@ -24,7 +24,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     // Get open price
     const open = stockOpenPrices[stocks.indexOf(stock)];
-    
+
     // Get the current price list
     const prices = await getPrices(stock);
     const origPriceLen = prices.length;
@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const now = new Date();
     const hour = now.getHours();
     const minute = now.getMinutes();
-    const minElapsed = Math.floor((hour * 60 + minute) / 5);
+    const minElapsed = hour * 60 + minute;
 
     // Only generate new prices
     const toGen = minElapsed - prices.length + 1;
@@ -49,27 +49,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         const d = randVal(MIN_DELTA, MAX_DELTA);
 
         let posChance = 0.5;
-        if (prev > open) {
-            posChance = prev - open;
-        } else if (prev < open) {
-            posChance = open - prev;
-        }
-
-        const pos = Math.random() < posChance;
+        if (prev - open > 2) 
+            posChance = 0;
+        else if (prev - open < -2)
+            posChance = 1;
+        
+        const pos = Math.random() < posChance
         const delta = pos ? d : -d;
 
         prev = Math.round((prev + delta) * 100) / 100;
 
         prices.push(prev);
     }
-    
+
     // Push the prices to Firestore if there are new prices
     if (prices.length > origPriceLen) {
         // Add the prices data to Firestore
         await addPrices(stock, prices);
     }
 
-    res.status(200).json({ prices, error: null });
+    // Filter out every 4 prices (ie. keep 0, 5, 10, 15, etc.)
+    const filteredPrices = prices.filter((_: number, i: number) => i % 5 === 0);
+
+    res.status(200).json({ prices: filteredPrices, error: null });
 }
 
 // Returns a random integer between min (inclusive) and max (exclusive)

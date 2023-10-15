@@ -1,7 +1,7 @@
 import { getFirestore, collection, setDoc, doc, getDoc } from 'firebase/firestore';
 import app from '../firebase';
 
-async function addPrices(stock: string, prices: number[]) {
+async function addPrices(stock: string, prices: number[]): Promise<boolean> {
     try {
         const db = getFirestore(app); // Initialize Firestore
 
@@ -23,7 +23,7 @@ async function addPrices(stock: string, prices: number[]) {
     }
 }
 
-async function getPrices(stock: string) {
+async function getPrices(stock: string): Promise<number[]> {
     // Get today's date
     const today = new Date();
     const date = stock + '-' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
