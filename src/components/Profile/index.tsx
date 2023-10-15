@@ -34,18 +34,19 @@ function validateLastName() {
   e.style.setProperty('--color', color);
   return validated;
 }
-function validatePassword() {
-  const e = document.getElementById("loginpassword") as HTMLInputElement;
-  const password = e.value;
-  let validated = false;
-  let color = '#F24855';
-  if (password.length >= 8) {
-    color = '#26CF5E';
-    validated = true;
+function validateExperience() {
+  const regex = /^(beginner|intermediate|advanced)$/
+  const e = document.getElementById("profileexperience") as HTMLInputElement
+  const v = e.value
+  let validated = false
+  let color = "#F24855"
+  if (v.match(regex)) {
+    color = "#26CF5E"
+    validated = true
   }
-  if (password === undefined || password === '') color = '#F5F5F5';
-  e.style.setProperty('--color', color);
-  return validated;
+  if (v === undefined || v === "") color = "#F5F5F5"
+  e.style.setProperty("--color", color)
+  return validated
 }
 
 export default function Profile({ setUser, setProfile }: ProfileProps) {
@@ -57,13 +58,20 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
       <div id="profileactual" className="relative flex flex-col items-center w-1/3 h-max p-3 bg-gray-400 rounded-xl text-white">
         <div className="text-3xl font-black mb-7">Profile</div>
         <div className="text-xl font-bold my-3">First Name</div>
-        <input id="profilefirst" onChange={validateFirstName} className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" placeholder={user.first_name}></input>
+        <input id="profilefirst" onChange={validateFirstName} className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" defaultValue={user.first_name}></input>
         <div className="text-xl font-bold my-3">Last Name</div>
-        <input id="profilelast" onChange={validateLastName} className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" placeholder={user.last_name}></input>
+        <input id="profilelast" onChange={validateLastName} className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" defaultValue={user.last_name}></input>
+        <div className="text-xl font-bold my-3">Experience</div>
+        <input id="profileexperience" list="profileexperiencelist" className="w-1/2 bg-gray-700 text-lg text-center rounded-lg" onChange={validateExperience} defaultValue={user.experience}></input>
+        <datalist id="profileexperiencelist" defaultValue={user.experience}>
+          <option value="beginner" />
+          <option value="intermediate" />
+          <option value="advanced" />
+        </datalist>
         <div className="flex flex-row items-center justify-center mt-10">
           <div className="rounded-xl text-center bg-blue-400 w-24 p-3 m-4 cursor-pointer hover:brightness-125 transition" onClick={() => {
             setLoading(true);
-            if (!validateFirstName() || !validateLastName()) {
+            if (!validateFirstName() || !validateLastName() || !validateExperience()) {
               setLoading(false);
               return setError("Invalid profile data...");
             }
@@ -75,7 +83,8 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
                 first_name: (document.getElementById("profilefirst") as HTMLInputElement).value,
                 last_name: (document.getElementById("profilelast") as HTMLInputElement).value,
                 watchlist: user.watchlist,
-                positions: user.positions
+                positions: user.positions,
+                experience: (document.getElementById("profileexperience") as HTMLInputElement).value
               }),
             }).then(async (result) => {
               if (result.status !== 200) {
@@ -91,7 +100,8 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
                 password: user.password,
                 email: user.email,
                 watchlist: user.watchlist,
-                positions: user.positions
+                positions: user.positions,
+                experience: user.experience
               };
               localStorage.setItem("user", JSON.stringify(userData));
               setUser(userData);

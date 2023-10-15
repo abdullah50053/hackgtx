@@ -11,9 +11,10 @@ interface ToolbarProps {
     user?: UserData
     stocks: Stock[]
     setCurrentStockIndex: any
+    setProfileView: any
 }
 
-export default function Toolbar({ user, stocks, setCurrentStockIndex }: ToolbarProps) {
+export default function Toolbar({ user, stocks, setCurrentStockIndex, setProfileView }: ToolbarProps) {
     const [selected, setSelected] = useState<boolean>(false)
     return (
         <div className="flex flex-shrink-0 flex-row content-start items-center w-full h-20 px-8 bg-white">
@@ -34,7 +35,7 @@ export default function Toolbar({ user, stocks, setCurrentStockIndex }: ToolbarP
             {/* Personalization */}
             <div className="flex flex-row flex-grow m-auto justify-end items-center">
                 <BellSVG className="transition my-auto mx-1 text-lg hover:scale-125 cursor-pointer" />
-                <GearSVG className="transition my-auto mx-1 text-lg hover:scale-125 hover:rotate-180 cursor-pointer" />
+                <GearSVG className="transition my-auto mx-1 text-lg hover:scale-125 hover:rotate-180 cursor-pointer" onClick={() => setProfileView(true)} />
                 <div className="w-0.5 h-5 mx-2 bg-black" />
                 <div className="flex flex-row my-auto items-center justify-center cursor-pointer">
                     <ProfileSVG className="mx-1 font-black" />
