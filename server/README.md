@@ -2,6 +2,8 @@
 
 - flask
 - yfinance
+- python-dotenv
+- openai
 
 # Exec
 

@@ -1,3 +1,5 @@
 venv
 trained
 __pycache__
+.env
+.env.local
