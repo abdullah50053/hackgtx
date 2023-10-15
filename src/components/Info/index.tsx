@@ -15,13 +15,15 @@ const Chart = dynamic(
 interface InfoProps {
     user?: UserData
     updateWatchlist: any
+    updatePosition: any
     stock: Stock
     prices: number[]
     lastUpdate: Date
 }
 
-export default function Info({ user, updateWatchlist, stock, prices, lastUpdate }: InfoProps) {
+export default function Info({ user, updateWatchlist, updatePosition, stock, prices, lastUpdate }: InfoProps) {
     if (!stock) return <div className="w-full"/>
+    console.log(user?.positions.find((p) => p.ticker === stock.ticker))
     return (
         <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 text-black bg-white">
             {/* Top Bar */}
@@ -65,6 +67,12 @@ export default function Info({ user, updateWatchlist, stock, prices, lastUpdate 
               <PlusSVG className="w-6 h-6 mr-2" />
               <div className="text-sm font-extrabold">Watch</div>
           </div>}
+          <div className="mx-2 flex flex-row items-center justify-center cursor-pointer w-max p-1 px-2 rounded-xl border-4 border-green-400 text-green-400 hover:border-transparent hover:text-white hover:bg-green-400 transition font-extrabold" onClick={() => {
+            updatePosition(user, stock, "buy")
+          }}>$ BUY</div>
+          {user.positions.find((p) => p.ticker === stock.ticker) && <div className="mx-2 flex flex-row items-center justify-center cursor-pointer w-max p-1 px-2 rounded-xl border-4 border-red-400 text-red-400 hover:border-transparent hover:text-white hover:bg-red-400 transition font-extrabold" onClick={() => {
+            updatePosition(user, stock, "sell")
+          }}>$ SELL</div>}
         </div>}
         </div>
     )
