@@ -4,7 +4,8 @@
 
 1. Go to `data-ingest` dir
 2. `python3 -m venv venv`
-3. `python3 -m pip install -r requirements.txt`
+3. ~~`python3 -m pip install -r requirements.txt`~~
+3. `python3 -m pip install yfinance`
 4. `python3 main.py`
 
 ## JSON file generation
