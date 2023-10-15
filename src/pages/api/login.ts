@@ -7,7 +7,7 @@ export async function handleLogin(req: NextApiRequest, res: NextApiResponse) {
   const data = JSON.parse(body);
   try {
     const db = getFirestore(app)
-    const document = await getDoc(doc(db, `account/${data.phone}`))
+    const document = await getDoc(doc(db, `account/${data.email}`))
     if (document.exists()) {
       if (data.password !== document.data().password) return res.status(401).json({});
       return res.status(200).json({ data: document.data() });

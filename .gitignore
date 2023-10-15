@@ -36,3 +36,5 @@ next-env.d.ts
 
 # data
 src/data.json
+
+.env

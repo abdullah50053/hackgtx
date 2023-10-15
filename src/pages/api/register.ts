@@ -7,7 +7,7 @@ export async function handleRegister(req: NextApiRequest, res: NextApiResponse) 
   const data = JSON.parse(body);
   try {
     const db = getFirestore(app)
-    let document = await getDoc(doc(db, `account/${data.phone}`))
+    let document = await getDoc(doc(db, `account/${data.email}`))
     if (document.exists()) {
       return res.status(201).json({});
     } else {
@@ -15,10 +15,11 @@ export async function handleRegister(req: NextApiRequest, res: NextApiResponse) 
         first_name: "",
         last_name: "",
         password: data.password,
-        phone: data.phone,
-        watchlist: ['GS', 'UBER', 'TSLA', 'NVDA'],
+        email: data.email,
+        watchlist: [],
+        positions: []
       };
-      await setDoc(doc(db, `account/${data.phone}`), {
+      await setDoc(doc(db, `account/${data.email}`), {
         ...newData
       })
       return res.status(200).json({ data: newData });
