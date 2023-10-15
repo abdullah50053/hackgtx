@@ -41,7 +41,7 @@ export async function getServerSideProps() {
   const stocks: Stock[] = []
 
   for (let ticker of watchedTickers) {
-    const priceRes = await fetch(`http://localhost:3000/api/prices/today?stock=${ticker}`, {
+    const priceRes = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/prices/today?stock=${ticker}`, {
       mode: "cors",
       method: "GET"
     })
@@ -51,7 +51,7 @@ export async function getServerSideProps() {
     }
     const prices = priceData.prices
 
-    const metaRes = await fetch(`http://localhost:3000/api/stock?stock=${ticker}`, {
+    const metaRes = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/stock?stock=${ticker}`, {
       mode: "cors",
       method: "GET"
     })

@@ -53,7 +53,7 @@ export default function Login({ setUser }: LoginProps) {
               setLoading(false);
               return;
             }
-            fetch("http://localhost:3000/api/register", {
+            fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/register`, {
               mode: 'cors',
               method: 'POST',
               body: JSON.stringify({
@@ -93,7 +93,7 @@ export default function Login({ setUser }: LoginProps) {
               setLoading(false);
               return;
             }
-            fetch("http://localhost:3000/api/login", {
+            fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/login`, {
               mode: 'cors',
               method: 'POST',
               body: JSON.stringify({

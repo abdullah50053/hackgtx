@@ -12,11 +12,20 @@ interface ToolbarProps {
     stocks: Stock[]
     setCurrentStockIndex: any
     setProfileView: any
-    totalEarnings: number
+    giveMoney: any
+    positionState: any
 }
 
-export default function Toolbar({ user, stocks, totalEarnings, setCurrentStockIndex, setProfileView }: ToolbarProps) {
+export default function Toolbar({ user, giveMoney, stocks, positionState, setCurrentStockIndex, setProfileView }: ToolbarProps) {
     const [selected, setSelected] = useState<boolean>(false)
+
+    let totalEarnings = 0
+    positionState.forEach((p: any) => {
+      let stock = stocks.find((s) => s.ticker === p.ticker) ?? { price: 1 }
+      let pos = user?.positions.find((s) => s.ticker === p.ticker) ?? { lastPrice: stock.price }
+      totalEarnings += p.shares * pos.lastPrice
+    })
+
     return (
         <div className="flex flex-shrink-0 flex-row content-start items-center w-full h-20 px-8 bg-white">
             {/* Search Bar */}
@@ -34,7 +43,9 @@ export default function Toolbar({ user, stocks, totalEarnings, setCurrentStockIn
                 }} />
             </div>
             {/* Earnings */}
-            <div className="flex flex-row text-2xl w-fit text-center font-bold text-black mx-8"><span className="text-green-700 text-black">$</span>{totalEarnings.toFixed(2)}</div>
+            <div className="flex flex-row text-2xl w-fit text-center font-bold text-black mx-8 cursor-pointer" onClick={() => {
+                giveMoney(100)
+            }}><span className="text-green-700 text-black">$</span>{totalEarnings.toFixed(2)}</div>
             {/* Personalization */}
             <div className="flex flex-row flex-grow m-auto justify-end items-center">
                 <BellSVG className="transition my-auto mx-1 text-lg hover:scale-125 cursor-pointer" />
