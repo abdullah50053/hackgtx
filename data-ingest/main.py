@@ -24,13 +24,14 @@ def main():
 
     # Get the 5 minute data for the last 5 days
     week_data = []
-    for stock in stocks:
+    for d in stocks:
+        stock, name = d.split()
         data = pull_data(stock, "1m", "5d")
         print(
             "Got weekly data for "
             + stock
             + "... remaining: "
-            + str(len(stocks) - stocks.index(stock))
+            + str(len(stocks) - stocks.index(d))
         )
 
         # Remove every 4 elements (keep index 0, 5, 10, etc.)
@@ -41,43 +42,47 @@ def main():
         
     # Get the hour data for the last month
     month_data = []
-    for stock in stocks:
+    for d in stocks:
+        stock, name = d.split()
         data = pull_data(stock, "1h", "1mo")
         print(
             "Got monthly data for "
             + stock
             + "... remaining: "
-            + str(len(stocks) - stocks.index(stock))
+            + str(len(stocks) - stocks.index(d))
         )
         month_data.append(data)
 
     # Get the daily data for the last year
     year_data = []
-    for stock in stocks:
+    for d in stocks:
+        stock, name = d.split()
         data = pull_data(stock, "1d", "1y")
         print(
             "Got yearly data for "
             + stock
             + "... remaining: "
-            + str(len(stocks) - stocks.index(stock))
+            + str(len(stocks) - stocks.index(d))
         )
         year_data.append(data)
     
     # Get the open prices for the last day
     stock_open_prices = []
-    for stock in stocks:
+    for d in stocks:
+        stock, name = d.split()
         data = pull_data(stock, "1d", "1d")
         print(
             "Got open price for "
             + stock
             + "... remaining: "
-            + str(len(stocks) - stocks.index(stock))
+            + str(len(stocks) - stocks.index(d))
         )
         stock_open_prices.append(data[0])
         
     # Format output JSON
     data = {
-        "stocks": stocks,
+        "stocks": [stock.split()[0] for stock in stocks],
+        "stockNames": [stock.split()[1] for stock in stocks],
         "stockOpenPrices": stock_open_prices,
         "week": week_data,
         "month": month_data,

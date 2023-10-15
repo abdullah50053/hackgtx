@@ -31,47 +31,6 @@ export default function Watchlist({ watched }: WatchlistProps) {
         )
     }
     useEffect(() => setOverflowing(isOverflowing(watchedContainerRef)), [overflowing])
-    watched = [
-        {
-            ticker: "AAPL",
-            name: "Apple",
-            iconUrl: "https://cdn-icons-png.flaticon.com/512/154/154870.png",
-            price: 310.4,
-            delta: -1.1
-        },
-        {
-            ticker: "TSLA",
-            name: "Tesla",
-            iconUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/1200px-Tesla_T_symbol.svg.png",
-            price: 310.4,
-            delta: 0.2
-        },
-        {
-            ticker: "DDOG",
-            name: "Datadog",
-            iconUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/Datadog_logo.svg/1200px-Datadog_logo.svg.png",
-            price: 310.4,
-            delta: 100
-        },
-        {
-            ticker: "AMZN",
-            name: "Amazon",
-            price: 310.4,
-            delta: 0.1
-        },
-        {
-            ticker: "AMD",
-            name: "AMD",
-            price: 310.4,
-            delta: 0.3
-        },
-        {
-            ticker: "NFLX",
-            name: "Netflix",
-            price: 310.4,
-            delta: 0.8
-        }
-    ]
     let watchedComponents: React.JSX.Element[] = []
     if (watched) {
         watched.forEach((stock) => {
