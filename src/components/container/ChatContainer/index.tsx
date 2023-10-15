@@ -51,10 +51,32 @@ export default function ChatContainer({ }: ChatContainerProps) {
         }
       ]*/[])
     const [selected, setSelected] = useState<boolean>(false)
-    const sendChat = (chat: Chat): void => {
+    const sendChat = async (chat: Chat): Promise<void> => {
       let newChats = chats.map((c) => c)
       newChats.push(chat)
+
       setChats(newChats)
+      // Send fetch req
+      fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/chat/any`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          data: chat.text
+        })
+      }).then(async (res) => {
+      if (res.status !== 200) {
+        console.error(res.status, res.statusText, res.body)
+      } else {
+        const data = await res.text();
+        newChats.push({
+          sender: "MoneyMoo",
+          text: data,
+          left: true
+        });
+      }
+      });
     }
     const chatboxRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
