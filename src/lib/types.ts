@@ -4,6 +4,7 @@ export interface Stock {
     iconUrl?: string
     price: number
     delta: number
+    prices?: number[]
 }
 
 export interface Chat {

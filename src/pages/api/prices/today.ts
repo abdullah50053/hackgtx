@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import data from '../../data.json';
+import data from '../../../data.json';
 
 type ResponseData = {
     prices: number[];
