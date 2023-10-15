@@ -5,12 +5,12 @@ import data from '../data.json';
 const MIN_DELTA = 0.01;
 const MAX_DELTA = 0.2;
 
-async function updatePrices(stock: string): Promise<number[]> {
+async function getPrices(stock: string): Promise<number[]> {
     // Get open price
     const open = data.stockOpenPrices[data.stocks.indexOf(stock)];
 
     // Get the current price list
-    const prices = await getPrices(stock);
+    const prices = await findPrices(stock);
     const origPriceLen = prices.length;
 
     // Get the total mins elapsed in the day
@@ -83,7 +83,7 @@ async function addPrices(stock: string, prices: number[]): Promise<boolean> {
     }
 }
 
-async function getPrices(stock: string): Promise<number[]> {
+async function findPrices(stock: string): Promise<number[]> {
     // Get today's date
     const today = new Date();
     const date = stock + '-' + today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -99,4 +99,9 @@ async function getPrices(stock: string): Promise<number[]> {
     return prices;
 }
 
-export { addPrices, getPrices, updatePrices };
+async function getCurrPrice(stock: string): Promise<number> {
+    const prices = await getPrices(stock);
+    return prices[prices.length - 1];
+}
+
+export { addPrices, findPrices, getPrices, getCurrPrice };

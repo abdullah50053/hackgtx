@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../../data.json';
-import { updatePrices } from '@/lib/prices';
+import { getPrices } from '@/lib/prices';
 
 type ResponseData = {
     prices: number[];
@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return;
     }
 
-    const prices = await updatePrices(stock);
+    const prices = await getPrices(stock);
 
     // Filter out every 4 prices (ie. keep 0, 5, 10, 15, etc.)
     const filteredPrices = prices.filter((_: number, i: number) => i % 5 === 0);

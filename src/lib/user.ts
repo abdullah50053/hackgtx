@@ -4,12 +4,19 @@ export interface UserData {
     first_name: string;
     last_name: string;
     watchlist: string[];
-    positions: Position[]
+    positions: Position[];
+    money: number;
   }
 export interface Position {
   ticker: string
   shares: number
   lastPrice: number
+}
+
+export interface PositionInfo {
+  ticker: string
+  shares: number
+  return: number 
 }
   
   export function getUser() {
