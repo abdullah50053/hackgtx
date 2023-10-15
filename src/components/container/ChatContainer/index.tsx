@@ -62,6 +62,10 @@ export default function ChatContainer({ }: ChatContainerProps) {
     }, [chats])
     let chatComponents: React.JSX.Element[] = []
     chats.forEach((chat) => chatComponents.push(<ChatBubble key={Math.random()} chat={chat} color={chat.sender === "You" ? "bg-blue-500" : "bg-gray-400"} />))
+
+    const prompts = ["When to buy/sell/hold?", "Should I buy/sell/hold?", "Stock information."]
+    const promptComponents = prompts.map((p) => <div className="rounded-xl mx-4 p-4 w-fit cursor-pointer bg-gray-200 text-center hover:brightness-90">{p}</div>)
+
     return (
         <div className="flex flex-col m-0 p-0 w-96 h-screen bg-white">
             <div className="flex flex-row items-center justify-center mx-auto p-0 w-fit h-16 bg-white">
@@ -71,6 +75,9 @@ export default function ChatContainer({ }: ChatContainerProps) {
             <div className="scrollbar flex-grow m-0 p-0 w-full h-auto bg-white overflow-y-auto">
                 {chatComponents}
                 <div ref={chatboxRef} />
+            </div>
+            <div className="flex flex-row m-0 p-1 items-center justify-center text-black w-max h-fit overflow-x-auto bg-white">
+              {promptComponents}
             </div>
             <div className={`transition flex m-0 p-1 items-center justify-center w-full h-fit bg-white ${selected ? "brightness-95" : "brightness-100"}`}>
                 <input className="rounded-lg block text-black w-full h-fit p-2 bg-gray-200 outline-none" type="text" placeholder="Send a message" onFocus={() => setSelected(true)} onBlur={() => setSelected(false)} onKeyDown={(e) => {
