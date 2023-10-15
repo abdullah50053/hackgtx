@@ -9,7 +9,7 @@ export interface UserData {
 export interface Position {
   ticker: string
   shares: number
-  initialInvestment: number
+  lastPrice: number
 }
   
   export function getUser() {
