@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  main:
+    container_name: cash-client
+    environment:
+      - PORT=3000
+      - NEXT_PUBLIC_FIREBASE_API_KEY=${NEXT_PUBLIC_FIREBASE_API_KEY}
+      - NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN}
+      - NEXT_PUBLIC_FIREBASE_PROJECT_ID=${NEXT_PUBLIC_FIREBASE_PROJECT_ID}
+      - NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET}
+      - NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID}
+      - NEXT_PUBLIC_FIREBASE_APP_ID=${NEXT_PUBLIC_FIREBASE_APP_ID}
+    build:
+      context: './'
+      dockerfile: './Dockerfile'
+    ports:
+      - '3000:3000'
+        
+  flask:
+    container_name: cash-server
+    build:
+      context: './server'
+      dockerfile: './Dockerfile'
+    ports:
+      - '5000:5000'
+    depends_on:
+      - main
+  
