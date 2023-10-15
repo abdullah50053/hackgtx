@@ -54,7 +54,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
         }
         setUser(getUser());
       })()
-    })
+    }, [user])
     let earnings = 0
     positionState.forEach((p: any) => {
       let stock = stocks.find((s) => s.ticker === p.ticker) ?? { price: 1 }
