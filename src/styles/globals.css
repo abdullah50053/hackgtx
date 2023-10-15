@@ -37,3 +37,21 @@ body {
   background-color: #4E4F4E;
   border-radius: 10px;
 }
+
+#loginphone:focus, #loginpassword:focus {
+  outline: none;
+}
+#loginphone, #loginpassword {
+  --color: #F5F5F5;
+  box-shadow: 5px 5px 7px -3px var(--color);
+  transition: box-shadow 0.25s;
+}
+#profilefirst:focus, #profilelast:focus {
+  outline: none;
+}
+
+#profilefirst, #profilelast {
+  --color: #F5F5F5;
+  box-shadow: 5px 5px 7px -3px var(--color);
+  transition: box-shadow 0.25s;
+}
