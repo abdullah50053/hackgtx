@@ -7,9 +7,10 @@ interface WatchlistProps {
     stocks: Stock[]
     watched?: Stock[]
     setCurrentStockIndex: any
+    positionState: any
 }
 
-export default function Watchlist({ stocks, watched, setCurrentStockIndex }: WatchlistProps) {
+export default function Watchlist({ stocks, watched, positionState, setCurrentStockIndex }: WatchlistProps) {
     const WIDTH = 288
     const [overflowing, setOverflowing] = useState<boolean>(false)
     const watchedContainerRef = useRef<HTMLDivElement>(null)
@@ -34,7 +35,7 @@ export default function Watchlist({ stocks, watched, setCurrentStockIndex }: Wat
     let watchedComponents: React.JSX.Element[] = []
     if (watched) {
         watched.forEach((stock) => {
-            watchedComponents.push(<WatchedStockCard key={stock.ticker} stock={stock} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} />)
+            watchedComponents.push(<WatchedStockCard key={stock.ticker} stock={stock} positionState={(positionState ?? []).find((p: any) => p.ticker === stock.ticker)} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} />)
         })
     }
     return (

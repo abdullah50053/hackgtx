@@ -19,11 +19,15 @@ interface InfoProps {
     stock: Stock
     prices: number[]
     lastUpdate: Date
+    positionState: any
 }
 
-export default function Info({ user, updateWatchlist, updatePosition, stock, prices, lastUpdate }: InfoProps) {
+export default function Info({ user, updateWatchlist, positionState, updatePosition, stock, prices, lastUpdate }: InfoProps) {
     if (!stock) return <div className="w-full"/>
-    console.log(user?.positions.find((p) => p.ticker === stock.ticker))
+    const position = (positionState ?? []).find((p: any) => p.ticker === stock.ticker)
+    const returns = position ? position.returns : 0
+    const userPosition = user?.positions.find((p) => p.ticker === position.ticker)
+    const shares = userPosition ? userPosition.shares : undefined
     return (
         <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 text-black bg-white">
             {/* Top Bar */}
@@ -39,13 +43,13 @@ export default function Info({ user, updateWatchlist, updatePosition, stock, pri
                 {/* Basic Stats */}
                 <div className="flex flex-grow flex-col items-end justify-center">
                     <div className="flex flex-row items-center">
-                        <div className={`flex flex-row items-center justify-center rounded-full text-center w-fit px-2 py-1 text-white ${stock.delta >= 0 ? "bg-green-700" : "bg-red-600"}`}>
-                            <div className="font-black">{stock.delta.toFixed(2)}%</div>
-                            <ArrowLongSVG className={`w-3 h-3 m-0 p-0 ${stock.delta >= 0 ? "" : "rotate-180"}`} />
+                        <div className={`flex flex-row items-center justify-center rounded-full text-center w-fit px-2 py-1 text-white ${returns >= 0 ? "bg-green-700" : "bg-red-600"}`}>
+                            <div className="font-black">{returns.toFixed(2)}%</div>
+                            <ArrowLongSVG className={`w-3 h-3 m-0 p-0 ${returns >= 0 ? "" : "rotate-180"}`} />
                         </div>
                         <div className="text-right text-2xl font-bold pl-2">${stock.price.toFixed(2)}</div>
                     </div>
-                    <div className="">Last updated {lastUpdate.toDateString()}</div>
+                    {shares && <div className="font-bold pl-2">You own {shares} shares</div>}
                 </div>
             </div>
             <div className="m-auto mt-2 w-full h-1 bg-gray-200" />

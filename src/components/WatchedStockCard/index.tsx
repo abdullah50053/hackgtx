@@ -11,10 +11,12 @@ const Chart = dynamic(
 interface WatchedStockCardProps {
     stocks: Stock[]
     stock: Stock
+    positionState: any
     setCurrentStockIndex: any
 }
 
-export default function WatchedStockCard({ stocks, stock, setCurrentStockIndex }: WatchedStockCardProps) {
+export default function WatchedStockCard({ stocks, stock, positionState, setCurrentStockIndex }: WatchedStockCardProps) {
+    const returns = positionState ? positionState.returns : 0
     let prices = stock.prices ?? []
     return (
         <div className="transition text-black flex flex-shrink-0 flex-col w-72 h-full px-12 py-6 hover:bg-gray-200 cursor-pointer" onClick={() => {
@@ -33,7 +35,7 @@ export default function WatchedStockCard({ stocks, stock, setCurrentStockIndex }
                 </div>
                 {/* Graph */}
                 <div className="ml-auto w-16 h-12 justify-end">
-                    <Chart prices={prices} ticker={stock.ticker} delta={stock.delta} inComponent={true} />
+                    <Chart prices={prices} ticker={stock.ticker} delta={returns} inComponent={true} />
                 </div>
             </div>
             {/* Stock Price */}
@@ -43,10 +45,10 @@ export default function WatchedStockCard({ stocks, stock, setCurrentStockIndex }
             </div>
             {/* Delta */}
             <div className="flex flex-row items-center">
-                <div className="font-bold">Delta</div>
-                <div className={`flex flex-grow flex-row items-center justify-end ${stock.delta > 0 ? "text-green-700" : "text-red-600"}`}>
-                    <div className="font-black text-right">{stock.delta.toFixed(2)}%</div>
-                    <ArrowLongSVG className={`w-3 h-3 m-0 p-0 ${stock.delta > 0 ? "" : "rotate-180"}`} />
+                <div className="font-bold">Returns</div>
+                <div className={`flex flex-grow flex-row items-center justify-end ${returns >= 0 ? "text-green-700" : "text-red-600"}`}>
+                    <div className="font-black text-right">{returns.toFixed(2)}%</div>
+                    <ArrowLongSVG className={`w-3 h-3 m-0 p-0 ${returns >= 0 ? "" : "rotate-180"}`} />
                 </div>
             </div>
         </div>
