@@ -14,13 +14,13 @@ const Chart = dynamic(
 
 interface InfoProps {
     user?: UserData
-    setUser: any
+    updateWatchlist: any
     stock: Stock
     prices: number[]
     lastUpdate: Date
 }
 
-export default function Info({ user, setUser, stock, prices, lastUpdate }: InfoProps) {
+export default function Info({ user, updateWatchlist, stock, prices, lastUpdate }: InfoProps) {
     if (!stock) return <div className="w-full"/>
     return (
         <div className="rounded-3xl flex flex-col w-11/12 my-6 mx-auto p-4 text-black bg-white">
@@ -54,13 +54,13 @@ export default function Info({ user, setUser, stock, prices, lastUpdate }: InfoP
         {user && <div className="flex flex-row items-center mx-auto mt-4 w-full">
           {user.watchlist.includes(stock.ticker) ? <div className="flex flex-row items-center justify-center cursor-pointer w-max p-1 px-2 rounded-xl border-4 border-red-400 text-red-400 hover:border-transparent hover:text-white hover:bg-red-400 transition" onClick={() => {
             user.watchlist = user.watchlist.filter((f) => f !== stock.ticker);
-            setUser(user)
+            updateWatchlist(user)
           }}>
               <MinusSVG className="w-6 h-6 mr-2" />
               <div className="text-sm font-extrabold">Unwatch</div>
           </div> : <div className="flex flex-row items-center justify-center cursor-pointer w-max p-1 px-2 rounded-xl border-4 border-green-400 text-green-400 hover:border-transparent hover:text-white hover:bg-green-400 transition" onClick={() => {
               user.watchlist = user.watchlist.concat(stock.ticker);
-              setUser(user)
+              updateWatchlist(user)
           }}>
               <PlusSVG className="w-6 h-6 mr-2" />
               <div className="text-sm font-extrabold">Watch</div>
