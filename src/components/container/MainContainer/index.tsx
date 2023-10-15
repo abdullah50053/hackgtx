@@ -32,7 +32,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
         if (user.positions.length !== positionState.length) {
           let newPosition = (positionState ?? []).map((x: any) => x)
           for (let p of user.positions) {
-            let res = await fetch(`http://localhost:3000/api/trade/${user.email}/${p.ticker}`, {
+            let res = await fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/trade/${user.email}/${p.ticker}`, {
           mode: "cors",
           method: "GET",
           })
@@ -63,10 +63,35 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
     })
     return (
         <div className="scrollbar flex flex-grow flex-col m-0 p-0 w-auto h-full bg-gray-100 overflow-y-auto overflow-x-hidden items-start">
-            <Toolbar user={user} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} setProfileView={setProfileView} totalEarnings={earnings} />
+            <Toolbar positionState={positionState} user={user} stocks={stocks} setCurrentStockIndex={setCurrentStockIndex} setProfileView={setProfileView} giveMoney={(money: number) => {
+              fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/money/add`, {
+                mode: "cors",
+                method: "POST",
+                body: JSON.stringify({
+                  email: user?.email,
+                  amount: money
+                })
+              }).then((res) => {
+                if (res.status !== 200) {
+                  return console.error(res)
+                }
+                const userData: UserData = {
+                  email: user!.email,
+                  first_name: user!.first_name,
+                  last_name: user!.last_name,
+                  experience: user!.experience,
+                  password: user!.password,
+                  watchlist: user!.watchlist,
+                  positions: user!.positions,
+                  money: user!.money + money
+                }
+                localStorage.setItem("user", JSON.stringify(userData))
+                setUser(userData)
+              })
+            }} />
             <Watchlist stocks={stocks} watched={watchedStocks} setCurrentStockIndex={setCurrentStockIndex} positionState={positionState} />
             <Info user={user} stock={stocks[currentStockIndex]} prices={prices} positionState={positionState} lastUpdate={new Date()} updatePosition={(user: UserData, stock: Stock, action: "buy" | "sell") => {
-              fetch(`http://localhost:3000/api/trade/${action}`, {
+              fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/trade/${action}`, {
                 mode: "cors",
                 method: "POST",
                 body: JSON.stringify({
@@ -96,7 +121,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
                     pos = {
                       ticker: stock.ticker,
                       lastPrice: stock.price,
-                      shares: 1
+                      shares: 0
                     }
                     positions.push(pos)
                   }
@@ -117,7 +142,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
                 setUser(undefined)
               }).catch((err) => console.log(err))
             }} updateWatchlist={(user: UserData) => {
-        fetch("http://localhost:3000/api/profile", {
+        fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/profile`, {
           mode: 'cors',
           method: 'POST',
           body: JSON.stringify({

@@ -75,7 +75,7 @@ export default function Profile({ setUser, setProfile }: ProfileProps) {
               setLoading(false);
               return setError("Invalid profile data...");
             }
-            fetch("http://localhost:3000/api/profile", {
+            fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/profile`, {
               mode: 'cors',
               method: 'POST',
               body: JSON.stringify({
