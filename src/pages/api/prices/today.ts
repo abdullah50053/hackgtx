@@ -1,12 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../../data.json';
+import { addPrices, getPrices } from '@/api-fb/prices';
 
 type ResponseData = {
     prices: number[];
     error: string | null;
 };
-
-const prices: number[] = [];
 
 const MIN_DELTA = 0.01;
 const MAX_DELTA = 0.1;
@@ -15,7 +14,7 @@ const stocks = data.stocks;
 const stockOpenPrices = data.stockOpenPrices;
 
 // GET /today?stock={stock}
-export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
     // Get the stock from the query string
     const stock = req.query.stock as string;
     if (stocks.indexOf(stock) === -1) {
@@ -25,6 +24,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
 
     // Get open price
     const open = stockOpenPrices[stocks.indexOf(stock)];
+    
+    // Get the current price list
+    const prices = await getPrices(stock);
+    const origPriceLen = prices.length;
 
     // Get the total mins elapsed in the day
     const now = new Date();
@@ -58,6 +61,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
         prev = Math.round((prev + delta) * 100) / 100;
 
         prices.push(prev);
+    }
+    
+    // Push the prices to Firestore if there are new prices
+    if (prices.length > origPriceLen) {
+        // Add the prices data to Firestore
+        await addPrices(stock, prices);
     }
 
     res.status(200).json({ prices, error: null });
