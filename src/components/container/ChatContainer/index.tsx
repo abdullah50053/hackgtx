@@ -1,13 +1,16 @@
 import ChatBubble from "@/components/ChatBubble"
 import ChartSVG from "@/components/svg/ChartSVG"
-import { Chat } from "@/lib/types"
+import { Chat, Stock } from "@/lib/types"
+import { UserData } from "@/lib/user"
 import { useEffect, useRef, useState } from "react"
 
 interface ChatContainerProps {
-    
+  stocks: Stock[]
+  currIndex: number
+  user: UserData | undefined
 }
 
-export default function ChatContainer({ }: ChatContainerProps) {
+export default function ChatContainer({ stocks, currIndex, user }: ChatContainerProps) {
     const [chats, setChats] = useState<Chat[]>(/*[
         {
           sender: "You",
@@ -51,10 +54,32 @@ export default function ChatContainer({ }: ChatContainerProps) {
         }
       ]*/[])
     const [selected, setSelected] = useState<boolean>(false)
-    const sendChat = (chat: Chat): void => {
+    const sendChat = async (chat: Chat): Promise<void> => {
       let newChats = chats.map((c) => c)
       newChats.push(chat)
+
       setChats(newChats)
+      // Send fetch req
+      fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/chat/any`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          data: chat.text
+        })
+      }).then(async (res) => {
+      if (res.status !== 200) {
+        console.error(res.status, res.statusText, res.body)
+      } else {
+        const data = await res.text();
+        newChats.push({
+          sender: "MoneyMoo",
+          text: data,
+          left: true
+        });
+      }
+      });
     }
     const chatboxRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
@@ -63,8 +88,47 @@ export default function ChatContainer({ }: ChatContainerProps) {
     let chatComponents: React.JSX.Element[] = []
     chats.forEach((chat) => chatComponents.push(<ChatBubble key={Math.random()} chat={chat} color={chat.sender === "You" ? "bg-blue-500" : "bg-gray-400"} />))
 
-    const prompts = ["When to buy/sell/hold?", "Should I buy/sell/hold?", "Stock information."]
-    const promptComponents = prompts.map((p) => <div className="rounded-xl mx-4 p-4 w-fit cursor-pointer bg-gray-200 text-center hover:brightness-90">{p}</div>)
+    const prompts = ["Should I buy/sell/hold?", "Next best time to buy?", "Stock information."]
+    const promptComponents = prompts.map((p, i) => <div key={i} className="rounded-xl mx-4 p-4 w-fit flex-shrink-0 cursor-pointer bg-gray-200 text-center hover:brightness-90" onClick={() => {
+      promptMsg(i);
+    }}>{p}</div>)
+    
+    const promptMsg = async (i: number): Promise<void> => {
+      let newChats = chats.map((c) => c)
+      newChats.push({
+        sender: "You",
+        text: prompts[i],
+        left: false
+      })
+      setChats(newChats)
+      
+      const t = stocks[currIndex].ticker;
+      
+      const eps = ['buy', 'buywhen', 'info']
+      
+      // Send fetch req
+      fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/chat/${eps[i]}/${t}/${user ? user?.experience : 'beginner'}`, {
+        mode: "cors",
+        method: "POST",
+        body: "",
+      }).then(async (res) => {
+        if (res.status !== 200) {
+          console.error(res.status, res.statusText, res.body)
+        } else {
+          console.log(res);
+          const data = await res.text();
+          const newNewChats = newChats.map((c) => c)
+          
+          newNewChats.push({
+            sender: "MoneyMoo",
+            text: data,
+            left: true
+          });
+          
+          setChats(newNewChats);
+        }
+      });
+    }
 
     return (
         <div className="flex flex-col m-0 p-0 w-96 h-screen bg-white">

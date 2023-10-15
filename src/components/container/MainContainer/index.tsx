@@ -139,7 +139,7 @@ export default function MainContainer({ user, setUser, stocks, currentStockIndex
                   positions
                 }
                 localStorage.setItem("user", JSON.stringify(userData))
-                setUser(undefined)
+                setUser(userData)
               }).catch((err) => console.log(err))
             }} updateWatchlist={(user: UserData) => {
         fetch(`${process.env.NEXT_PUBLIC_ENDPOINT}/api/profile`, {

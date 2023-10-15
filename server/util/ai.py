@@ -11,6 +11,7 @@ if openai.api_key == None:
     print("OpenAI API key not found!")
     exit()
     
+sentiment = ['positive', 'negative', 'neutral']
 
 def run_do_i_buy(ticker: str, experience: str):
     prompt = """Act as a financial advisor explaining to me, a $USERLEVEL stock trader. 
@@ -24,7 +25,6 @@ def run_do_i_buy(ticker: str, experience: str):
                 '''
                 Based on the information provided and the market sentiment, explain if I should buy the stock.
                 Limit output to 3 sentences."""
-    sentiment = ['positive', 'negative', 'neutral']
                 
     past, future = predict.predict(ticker, 31)
 
@@ -37,6 +37,47 @@ def run_do_i_buy(ticker: str, experience: str):
     response = ask_openai(prompt)
     return response
 
+
+def run_when_to_buy(ticker: str, experience: str):
+    prompt = """Act as a financial advisor explaining to me, a $USERLEVEL stock trader. 
+                For the stock $TICKER, last month's data is: 
+                '''
+                $PAST
+                '''
+                next month’s data is: 
+                '''
+                $FUTURE
+                '''
+                The current sentiment for the stock is $SENTIMENT. Give an exact number of days from today when I should buy the stock and your reasoning. Be confident in your decision.
+                Limit output to 2 sentences."""
+                
+    past, future = predict.predict(ticker, 31)
+
+    prompt = prompt.replace("$TICKER", ticker)
+    prompt = prompt.replace("$SENTIMENT", random.choice(sentiment))
+    prompt = prompt.replace("$USERLEVEL", experience)
+    prompt = prompt.replace("$PAST", ', '.join(map(str, past)))
+    prompt = prompt.replace("$FUTURE", ', '.join(map(str, future)))
+
+    response = ask_openai(prompt)
+    return response
+    
+    
+def run_get_info(ticker: str, experience: str):
+    prompt = """Act as a financial advisor explaining to me. Give an unbiased one-paragraph summary of $TICKER to a $USERLEVEL trader."""
+
+    prompt = prompt.replace("$TICKER", ticker)
+    prompt = prompt.replace("$USERLEVEL", experience)
+
+    response = ask_openai(prompt)
+    return response
+
+
+def run_any(data: str):
+    prompt = data
+    response = ask_openai(prompt)
+    return response
+    
 
 # Define function to send message to OpenAI API and get response
 def ask_openai(prompt):
